@@ -31,7 +31,16 @@ export class AuthService {
 
   async signup(user: any) {
 
-    return this.usersService.create(user);
+    // return this.usersService.create(user);
+    const createdUser = await this.usersService.create(user);
+    const payload = { email: user.email, sub: createdUser.id };
+    const token = this.jwtService.sign(payload);
+
+    return {
+      userId: createdUser.id,
+      email: user.email,
+      access_token: token,
+    };  
   }
 
   async changePassword(userId: string, newPassword: string) {

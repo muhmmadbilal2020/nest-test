@@ -18,6 +18,10 @@ export class UsersService {
     return this.userRepository.findOne({ where: { email } });
   }
 
+  async getUserProfile(userId: any) {
+    return this.userRepository.findOne({ where: { id: userId } });
+  }
+
   async updatePassword(userId: any, newPassword: string) {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (user) {

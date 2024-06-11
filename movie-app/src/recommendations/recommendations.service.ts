@@ -13,7 +13,7 @@ export class RecommendationsService {
       console.log(userId,'user id')
       const response = await lastValueFrom(
         this.httpService
-          .get(`http://127.0.0.1:3001/recommendations/${userId}`)
+          .get(`http://127.0.0.1:4002/recommendations/${userId}`)
           .pipe(retry(3), catchError(() => []))
       );
       // return response.data;

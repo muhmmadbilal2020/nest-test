@@ -1,25 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Movie } from './movie.entity';
 
 @Injectable()
 export class RecommendationsService {
-  private readonly recommendations = {
-    '1': [1, 2, 3],
-    '2': [2, 3, 4],
-    '3': [1, 2, 3],
-    '4': [2, 3, 4],
-    '5': [1, 2, 3],
-    '6': [2, 3, 4],
-    '7': [1, 2, 3],
-    '8': [2, 3, 4],
-    '9': [1, 2, 3],
-    '10': [2, 3, 4],
-    '11': [1, 2, 3],
-    '12': [2, 3, 4],
-    '13': [1, 2, 3],
-    '14': [2, 3, 4],
-  };
+  constructor(
+    @InjectRepository(Movie)
+    private readonly movieRepository: Repository<Movie>,
+  ) {}
 
-  getRecommendations(userId: string) {
-    return this.recommendations[userId] || [];
+  async getRecommendations() {
+    const movies = await this.movieRepository.find();
+    return movies.map(movie => ({
+      id: movie.id,
+      title: movie.title
+    }));
   }
 }

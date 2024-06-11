@@ -9,9 +9,6 @@ export class Movie {
   @Column()
   title: string;
 
-  @Column()
-  description: string;
-
   @ManyToOne(() => Category)
   category: Category;
 
